@@ -1,0 +1,7 @@
+.idea
+*.iml
+.bsp
+.metals
+/target
+project/project
+project/target
