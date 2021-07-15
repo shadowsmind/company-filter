@@ -1,6 +1,7 @@
 package co.subneon.services
 
 import scala.io.Source
+
 import cats.effect.{IO, Resource}
 
 import co.subneon.domain.CompanyFilter
@@ -14,10 +15,12 @@ trait FilterStorageService {
 
 object FilterStorageService extends FilterStorageService {
 
+  private val filtersFile = getClass.getResource("/filters.json").getFile
+
   // there are not many filters, so we can load them into memory all at once
   override def getAll: IO[List[CompanyFilter]] =
     Resource
-      .fromAutoCloseable(IO(Source.fromResource("filters.json")))
+      .fromAutoCloseable(IO(Source.fromFile(filtersFile)))
       .use(file => IO(file.getLines().mkString))
       .flatMap(jsonString => IO.fromEither(FiltersDecoder.decode(jsonString)))
 

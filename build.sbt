@@ -6,7 +6,8 @@ val commonSettings = Seq(
     "-deprecation",
     "-encoding",
     "UTF8"
-  )
+  ),
+  run := Defaults.runTask(Runtime / fullClasspath, Compile / run / mainClass, run / runner).evaluated
 )
 
 val projectDependencies = {
@@ -14,7 +15,6 @@ val projectDependencies = {
   val fs2DataVersion    = "1.0.0"
   val circeVersion      = "0.14.1"
   val scalatestVersion  = "3.2.9"
-  val scalacheckVersion = "1.15.4"
 
   Seq(
     "co.fs2"         %% "fs2-core"             % fs2Version,
